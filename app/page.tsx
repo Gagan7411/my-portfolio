@@ -7,6 +7,9 @@ import { ProjectsSection } from "@/components/projects-section"
 import { ContactSection } from "@/components/contact-section"
 import { Footer } from "@/components/footer"
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+
 export default function Home() {
   return (
     <>
