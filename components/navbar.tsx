@@ -11,25 +11,12 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [isHidden, setIsHidden] = useState(false)
   const [lastScrollY, setLastScrollY] = useState(0)
+  
+  const { theme, toggleTheme } = useTheme() // Now safe to call
 
-  // Wait for client-side mount
   useEffect(() => {
     setMounted(true)
   }, [])
-
-  // Use theme only after mount to avoid SSR issues
-  let theme = "dark"
-  let toggleTheme = () => {}
-  
-  try {
-    if (mounted) {
-      const themeContext = useTheme()
-      theme = themeContext.theme
-      toggleTheme = themeContext.toggleTheme
-    }
-  } catch (e) {
-    // Theme context not available during SSR
-  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,9 +59,9 @@ export function Navbar() {
     setIsOpen(false)
   }
 
-  // Don't render until mounted
+  // Don't render navbar until client-side
   if (!mounted) {
-    return null
+    return <div className="h-20" /> // Placeholder to prevent layout shift
   }
 
   return (
@@ -84,9 +71,9 @@ export function Navbar() {
       transition={{ duration: 0.3 }}
       className="fixed top-8 left-1/2 -translate-x-1/2 z-50"
     >
+      {/* Rest of your navbar code stays the same */}
       <div className="bg-background/80 backdrop-blur-md border border-border rounded-full px-6 py-3 shadow-lg">
         <div className="flex items-center gap-2 md:gap-4">
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden p-2 hover:bg-card rounded-lg transition-colors"
@@ -94,7 +81,6 @@ export function Navbar() {
             <Menu className="w-5 h-5" />
           </button>
 
-          {/* Desktop Navigation Links */}
           <div className="hidden lg:flex items-center gap-6">
             {navLinks.map((link) => (
               
@@ -108,7 +94,6 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* Desktop Icons */}
           <div className="hidden md:flex items-center gap-4">
             {socialLinks.map((link) => {
               const Icon = link.icon
@@ -129,7 +114,6 @@ export function Navbar() {
             })}
           </div>
 
-          {/* Theme Toggle */}
           <motion.button
             onClick={toggleTheme}
             whileHover={{ scale: 1.1 }}
@@ -140,7 +124,6 @@ export function Navbar() {
           </motion.button>
         </div>
 
-        {/* Mobile Menu */}
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
