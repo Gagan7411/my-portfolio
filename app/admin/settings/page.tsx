@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ArrowLeft, User, Mail, LogOut } from "lucide-react"
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+
 function SettingsContent() {
   const router = useRouter()
   const { data: session } = useSession()
