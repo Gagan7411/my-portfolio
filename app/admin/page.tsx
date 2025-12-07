@@ -11,6 +11,9 @@ import { ResearchManager } from "@/components/admin/research-manager"
 import { ProfileManager } from "@/components/admin/profile-manager"
 import { BookOpen, Code2, Lightbulb, Settings, LogOut, User } from "lucide-react"
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+
 function AdminContent() {
   const router = useRouter()
   const { data: session } = useSession()
