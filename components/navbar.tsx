@@ -2,8 +2,7 @@
 
 import type React from "react"
 import { motion } from "motion/react"
-import { Home, Menu, Github, Linkedin, Sun, Moon } from "lucide-react"
-import { useTheme } from "@/lib/theme-context"
+import { Home, Menu, Github, Linkedin } from "lucide-react"
 import { useState, useEffect } from "react"
 
 export function Navbar() {
@@ -11,8 +10,6 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [isHidden, setIsHidden] = useState(false)
   const [lastScrollY, setLastScrollY] = useState(0)
-  
-  const { theme, toggleTheme } = useTheme() // Now safe to call
 
   useEffect(() => {
     setMounted(true)
@@ -59,9 +56,8 @@ export function Navbar() {
     setIsOpen(false)
   }
 
-  // Don't render navbar until client-side
   if (!mounted) {
-    return <div className="h-20" /> // Placeholder to prevent layout shift
+    return null
   }
 
   return (
@@ -71,7 +67,6 @@ export function Navbar() {
       transition={{ duration: 0.3 }}
       className="fixed top-8 left-1/2 -translate-x-1/2 z-50"
     >
-      {/* Rest of your navbar code stays the same */}
       <div className="bg-background/80 backdrop-blur-md border border-border rounded-full px-6 py-3 shadow-lg">
         <div className="flex items-center gap-2 md:gap-4">
           <button
@@ -83,7 +78,7 @@ export function Navbar() {
 
           <div className="hidden lg:flex items-center gap-6">
             {navLinks.map((link) => (
-              
+              <a
                 key={link.label}
                 href={link.href}
                 onClick={handleNavClick}
@@ -113,15 +108,6 @@ export function Navbar() {
               )
             })}
           </div>
-
-          <motion.button
-            onClick={toggleTheme}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            className="p-2 hover:bg-card rounded-lg transition-colors ml-2 border-l border-border pl-4"
-          >
-            {theme === "light" ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
-          </motion.button>
         </div>
 
         {isOpen && (
@@ -133,7 +119,7 @@ export function Navbar() {
           >
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => (
-                
+               <a 
                   key={link.label}
                   href={link.href}
                   onClick={handleNavClick}
